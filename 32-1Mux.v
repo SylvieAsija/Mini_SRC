@@ -1,4 +1,4 @@
-module thirtytwotooneMultiplexer (input wire [31:0] in0, in1, in2, in3, in4, in5, in6, in7, in8, in9, in10, in11, in12, in13, in14, in15, in16, in17, in18, in19, in20, in21, in22, in23, input wire [4:0] select, output reg[31:0] out);
+module Multiplexer_32 (input wire [31:0] in0, in1, in2, in3, in4, in5, in6, in7, in8, in9, in10, in11, in12, in13, in14, in15, in16, in17, in18, in19, in20, in21, in22, in23, input wire [4:0] select, output reg[31:0] out);
 
 			wire [31:0] mux0Out, mux1Out, mux2Out, mux3Out, mux4Out, mux5Out, mux8Out, mux9Out, mux10Out;
 			
@@ -19,6 +19,6 @@ module thirtytwotooneMultiplexer (input wire [31:0] in0, in1, in2, in3, in4, in5
 			
 			always@(*)
 				begin
-					out = mux10Out;
+					BusMuxOut = mux10Out;
 				end
 endmodule
