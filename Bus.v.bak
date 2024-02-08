@@ -7,11 +7,11 @@ module Bus(input wire R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en
 	wire [4:0] select;
 	reg [31:0] muxin;
 	
-	always @(Cen, In_Porten, MDRen, Pen, ZLOen, ZHIen, LOen, HIen, R15en, R14en,
+	always @(Cen, In_Porten, MDRen, Pen, ZLOen, ZHIghen, LOen, HIen, R15en, R14en,
 					R13en, R12en, R11en, R10en, R9en, R8en, R7en, R6en, R5en, R4en,
 					R3en, R2en, R1en, R0en)
 		begin
-			muxin = {{8'b0},Cen, In_Porten, MDRen, Pen, ZLOen, ZHIen, LOen, HIen, R15en, R14en,
+			muxin = {{8'b0},Cen, In_Porten, MDRen, Pen, ZLOen, ZHIghen, LOen, HIen, R15en, R14en,
 					R13en, R12en, R11en, R10en, R9en, R8en, R7en, R6en, R5en, R4en,
 					R3en, R2en, R1en, R0en};
 		end

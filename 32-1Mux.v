@@ -19,6 +19,6 @@ module Multiplexer_32 (input wire [31:0] in0, in1, in2, in3, in4, in5, in6, in7,
 			
 			always@(*)
 				begin
-					BusMuxOut = mux10Out;
+					out = mux10Out;
 				end
 endmodule

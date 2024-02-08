@@ -48,7 +48,7 @@ module DataPath(
 	
 	
 	//Create Other Regs
-	In_Port IP(clr, clk, In_PortIN, InPortBusIn);
+	//In_Port IP(clr, clk, In_PortIN, InPortBusIn);
 	register Out_Port(clr, clk, Out_Porten, busMuxOut, Out_PortOUT);
 	register PCreg(clr, clk, Pen, busMuxOut, PCBusIn);
    register IRreg(clr, clk, IRen, busMuxOut, IRoutput);
