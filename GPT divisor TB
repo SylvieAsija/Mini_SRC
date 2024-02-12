@@ -1,0 +1,51 @@
+module testbench;
+
+// Parameters
+parameter DIVIDEND = 4;
+parameter DIVISOR = 2;
+
+// Inputs
+reg [31:0] dividend;
+reg [31:0] divisor;
+
+// Outputs
+wire [63:0] quotient;
+wire [31:0] remainder;
+
+// Instantiate the module under test
+restoring_division dut (
+    .dividend(dividend),
+    .divisor(divisor),
+    .quotient(quotient),
+    .remainder(remainder)
+);
+
+// Stimulus
+initial begin
+    // Initialize inputs
+    dividend = DIVIDEND;
+    divisor = DIVISOR;
+
+    // Wait for 10 time units for the division to complete
+    #10;
+
+    // Display results
+    $display("Dividend: %d, Divisor: %d", dividend, divisor);
+    $display("Quotient: %d, Remainder: %d", quotient, remainder);
+    // Check if quotient is correct
+    if (quotient !== 2'b10) begin
+        $display("Error: Quotient is incorrect");
+    end else begin
+        $display("Quotient is correct");
+    end
+    // Check if remainder is correct
+    if (remainder !== 0) begin
+        $display("Error: Remainder is incorrect");
+    end else begin
+        $display("Remainder is correct");
+    end
+    // End simulation
+    $finish;
+end
+
+endmodule
