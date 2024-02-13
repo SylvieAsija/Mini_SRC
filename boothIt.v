@@ -4,12 +4,12 @@ module boothIt (
 );
 
     wire signed [31:0] negA;					// Negative (2's compilent) of multiplicand a
-    reg [2:0] combBits [15:0]; 				//the recoded bits
-    reg signed [32:0] partProd [15:0];  		// The partial products which are computed based on combBits
+    reg [2:0] recodedBits [15:0]; 				//the recoded bits
+    reg signed [32:0] partProd [15:0];  		// The partial products which are computed based on recodedBits
     reg signed [63:0] shiftedpartProd [15:0];	// The partial products shifted to the correct amount, in preparation to add them
     reg signed [63:0] sumpartProd;		
     //loop iterators 
-	 integer i, j;
+	integer i, j;
     
     //2's comp of A
     assign negA = -a;
@@ -19,19 +19,19 @@ module boothIt (
     begin
         
         // Special case
-        combBits[0] = {b[1], b[0], 1'b0};
+        recodedBitsBits[0] = {b[1], b[0], 1'b0};
             
               
         for(i=1;i<16;i=i+1) begin
-                combBits[i] = {b[2*i+1],b[2*i],b[2*i-1]};
+                recodedBits[i] = {b[2*i+1],b[2*i],b[2*i-1]};
        
         end
         
         // Compute partial products
         for(i=0;i<16;i=i+1)	begin
             
-            case(combBits[i])
-                
+            case(Bits[i])
+                recoded
                 //bit =  +1, partial product = a
                 3'b001 , 3'b010 : partProd[i] = {a[31],a};
                 //bit = +2, partial product = 2*a

@@ -43,34 +43,18 @@ module ALU(input [31:0] b, y, input [4:0] control, input con_flag, input IncPC, 
 	.Z (divOut));
 	
 	parameter	or_opcode = 5'b00110,
-					ori_opcode = 5'b01110,
-               and_opcode = 5'b00101,
-					andi_opcode = 5'b01101,
-               shr_opcode = 5'b00111,
-               shra_opcode = 5'b01000,
-               shl_opcode = 5'b01001,
-               ror_opcode = 5'b01010,
-               rol_opcode = 5'b01011,
-               negate_opcode = 5'b10001,
-               not_opcode = 5'b10010,
-               ADD_opcode = 5'b00011,
-					addi_opcode = 5'b01100,
-               SUBTRACT_opcode = 5'b00100,
-               MULTIPLY_opcode = 5'b01111,
-               DIVISION_opcode = 5'b10000,
-               INCREMENT_opcode = 5'b11111,
-					branch_opcode = 5'b10011,
-					jr_opcode = 5'b10100,
-					jal_opcode = 5'b10101,
-					in_opcode = 5'b10110,
-					out_opcode = 5'b10111,
-					mfhi_opcode = 5'b11000,
-					mflo_opcode = 5'b11001,
-					nop_opcode = 5'b11010,
-					halt_opcode = 5'b11011,
-					ld_opcode = 5'b00000,
-					ldi_opcode = 5'b00001,
-					st_opcode = 5'b00010;
+               	and_opcode = 5'b00101,
+               	shr_opcode = 5'b00111,
+               	shra_opcode = 5'b01000,
+               	shl_opcode = 5'b01001,
+               	ror_opcode = 5'b01010,
+               	rol_opcode = 5'b01011,
+               	negate_opcode = 5'b10001,
+               	not_opcode = 5'b10010,
+               	ADD_opcode = 5'b00011,
+               	SUBTRACT_opcode = 5'b00100,
+               	MULTIPLY_opcode = 5'b01111,
+               	DIVISION_opcode = 5'b10000,
 					
 	
 	// Controls which output comes out of the ALU
@@ -81,18 +65,19 @@ module ALU(input [31:0] b, y, input [4:0] control, input con_flag, input IncPC, 
 	// only used for the multiplication and the division factors.  
 	always @(*)
 	begin
-		if(IncPC == 1) begin
-                result[31:0] = b[31:0] + 1'b1;
-                result[63:32] = 32'h00000000;
-		end
-		else begin
+		// if(IncPC == 1) begin
+        //         result[31:0] = b[31:0] + 1'b1;
+        //         result[63:32] = 32'h00000000;
+		// end
+		//else 
+		begin
 			case(control)
 				or_opcode: begin 
-					result[31:0] = y | b;
+					result[31:0] = y || b;
 					result[63:32] = 32'h00000000;
 				end
 				and_opcode: begin
-					result[31:0] = y & b;
+					result[31:0] = y && b;
 					result[63:32] = 32'h00000000;
 				end
 				shr_opcode: begin	
@@ -189,7 +174,7 @@ module ALU(input [31:0] b, y, input [4:0] control, input con_flag, input IncPC, 
 					result[31:0] = ~b;
 					result[63:32] = 32'h00000000;
 				end
-				ADD_opcode, ldi_opcode, ld_opcode, st_opcode: begin
+				ADD_opcode: begin //, ldi_opcode, ld_opcode, st_opcode: begin
 					result[31:0] = addOut[31:0];
 					result[63:32] = 32'h00000000;
 				end
@@ -203,20 +188,20 @@ module ALU(input [31:0] b, y, input [4:0] control, input con_flag, input IncPC, 
 				DIVISION_opcode: begin
 					result = divOut[63:0];
 				end
-				INCREMENT_opcode: begin
-					result[31:0] = b[31:0] + 1'b1;
-					result[63:32] = 32'h00000000;
-				end
-				branch_opcode: begin	
-					if(con_flag) begin
-								result[31:0] <= addOut[31:0];
-								result[63:32] <= 32'd0;
-					end
-					else begin
-								result[31:0] <= y;
-								result[63:32] <= 32'd0;
-					end
-				end
+				// INCREMENT_opcode: begin
+				// 	result[31:0] = b[31:0] + 1'b1;
+				// 	result[63:32] = 32'h00000000;
+				// end
+				// branch_opcode: begin	
+				// 	if(con_flag) begin
+				// 				result[31:0] <= addOut[31:0];
+				// 				result[63:32] <= 32'd0;
+				// 	end
+				// 	else begin
+				// 				result[31:0] <= y;
+				// 				result[63:32] <= 32'd0;
+				// 	end
+				// end
 				default: begin
 					result = 64'h0000000000000000;
 				end
