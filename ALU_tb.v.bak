@@ -1,0 +1,23 @@
+`timescale 1ns/1ns
+
+module ALU_tb;
+
+	reg [31:0]a, b, y; 
+	reg [4:0] control; 
+	reg con_flag;
+	wire [63:0] result;
+	
+	ALU alu(b,y,control, con_flag, result);
+	
+	initial 
+		begin 
+			//Test 1 - worked
+			#10
+			a = 32'h00000001;
+			b = 32'h00000010;
+			y = a;
+			control = 32'h00000000; //or_opcode, result will be 32'h00000011
+			#100
+		end
+endmodule
+		
