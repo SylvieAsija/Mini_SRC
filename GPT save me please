@@ -1,0 +1,34 @@
+module divider(
+    input [31:0] numerator,
+    input [31:0] denominator,
+    output reg [31:0] quotient,
+    output reg [31:0] remainder
+);
+
+reg [31:0] current_remainder;
+reg [31:0] current_quotient;
+reg [4:0] count;
+
+always @(*) begin
+    current_remainder = numerator;
+    current_quotient = 0;
+    count = 32; // Initialize count to 32 bits
+end
+
+always @(posedge clk) begin
+    if (count > 0) begin
+        if (current_remainder >= denominator) begin
+            current_remainder = current_remainder - denominator;
+            current_quotient[count] = 1;
+        end
+        current_quotient = current_quotient << 1;
+        count = count - 1;
+    end
+end
+
+always @(*) begin
+    quotient = current_quotient;
+    remainder = current_remainder;
+end
+
+endmodule
