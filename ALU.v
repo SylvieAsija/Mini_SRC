@@ -1,11 +1,14 @@
-module ALU(input [31:0] b, y, input [4:0] control, input con_flag, input IncPC, output reg [63:0] result);
+module ALU(input [31:0] b, y, input [4:0] control, input con_flag, input IncPC, input wire clock, output reg [63:0] result);
 	//Y register is the 'temp register' that holds the value 
 	
-	wire [31:0] addOut, subOut;
+	wire [31:0] addOut, subOut, negOut;
 	wire [63:0] mulOut, divOut;
 	reg first, last; 
-	wire cOutAdd,cOutSub;
+	wire cOutAdd,cOutSub, cOutNeg;
 	reg [31:0] temp;
+	wire [31:0] valOne, tempResult;
+
+	valOne = {31'b0, 1'b1}
 	
 	//Subtraction
 	
@@ -63,13 +66,12 @@ module ALU(input [31:0] b, y, input [4:0] control, input con_flag, input IncPC, 
 	
 	// Note: Most of the operations only use the first 32 bits, the high 32 bits are
 	// only used for the multiplication and the division factors.  
-	always @(*)
-	begin
-		// if(IncPC == 1) begin
-        //         result[31:0] = b[31:0] + 1'b1;
-        //         result[63:32] = 32'h00000000;
-		// end
-		//else 
+	always @(negedge clock)	begin
+		if(IncPC == 1) begin
+                result[31:0] = b[31:0] + 1'b1;
+                result[63:32] = 32'h00000000;
+		end
+		else 					
 		begin
 			case(control)
 				or_opcode: begin 
@@ -167,14 +169,19 @@ module ALU(input [31:0] b, y, input [4:0] control, input con_flag, input IncPC, 
 						endcase					
 				end
 				negate_opcode: begin
-					result[31:0] = -b;
-					result[63:32] = 32'h00000000;
+					tempResult[31:0] = ~b;
+					carryRippleAdder forNeg(.a (valOne),
+											.b (tempResult),
+											.cin(1'b0),
+											.s (negOut),
+											.cout(cOutNeg));
+					result[63:0] = {32'b0, tempResult [31:0]};
 				end
 				not_opcode: begin
 					result[31:0] = ~b;
 					result[63:32] = 32'h00000000;
 				end
-				ADD_opcode: begin //, ldi_opcode, ld_opcode, st_opcode: begin
+				ADD_opcode: begin
 					result[31:0] = addOut[31:0];
 					result[63:32] = 32'h00000000;
 				end
@@ -188,23 +195,8 @@ module ALU(input [31:0] b, y, input [4:0] control, input con_flag, input IncPC, 
 				DIVISION_opcode: begin
 					result = divOut[63:0];
 				end
-				// INCREMENT_opcode: begin
-				// 	result[31:0] = b[31:0] + 1'b1;
-				// 	result[63:32] = 32'h00000000;
-				// end
-				// branch_opcode: begin	
-				// 	if(con_flag) begin
-				// 				result[31:0] <= addOut[31:0];
-				// 				result[63:32] <= 32'd0;
-				// 	end
-				// 	else begin
-				// 				result[31:0] <= y;
-				// 				result[63:32] <= 32'd0;
-				// 	end
-				// end
-				default: begin
+				default:
 					result = 64'h0000000000000000;
-				end
 			endcase
 		end 
 	end 
