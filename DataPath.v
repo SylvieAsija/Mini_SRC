@@ -1,6 +1,6 @@
 module DataPath(
 	input wire clk, stop, reset,
-     input wire [31:0] In_PortIN, 
+	input wire [31:0] In_PortIN, 
 		output wire [31:0] Out_PortOUT,
      
 
@@ -51,18 +51,18 @@ module DataPath(
 	//In_Port IP(clr, clk, In_PortIN, InPortBusIn);
 	register Out_Port(clr, clk, Out_Porten, busMuxOut, Out_PortOUT);
 	register PCreg(clr, clk, Pen, busMuxOut, PCBusIn);
-   register IRreg(clr, clk, IRen, busMuxOut, IRoutput);
-   register Yreg(clr, clk, Yen, busMuxOut, alu_input);
-   register ZLOReg(clr, clk, Zen, alu_result[31:0], ZLOBusIn);
+   	register IRreg(clr, clk, IRen, busMuxOut, IRoutput);
+  	register Yreg(clr, clk, Yen, busMuxOut, alu_input);
+   	register ZLOReg(clr, clk, Zen, alu_result[31:0], ZLOBusIn);
 	register ZHIReg(clr, clk, Zen, alu_result[63:32], ZHIhBusIn);
-   register HIreg(clr, clk, HIen, busMuxOut, HIBusIn);
-   register LOreg(clr, clk, LOen, busMuxOut, LOBusIn);
+   	register HIreg(clr, clk, HIen, busMuxOut, HIBusIn);
+   	register LOreg(clr, clk, LOen, busMuxOut, LOBusIn);
 
 
 //Bus
 Bus bus(Rselect[0], Rselect[1], Rselect[2], Rselect[3], Rselect[4], Rselect[5], Rselect[6], Rselect[7], Rselect[8], Rselect[9],
-	 Rselect[10], Rselect[11], Rselect[12], Rselect[13], Rselect[14], Rselect[15], HIselect, LOselect, ZHIselect, ZLOselect,
-	 Pselect, MDRselect, In_Portselect, Cselect, R0BusIn, R1BusIn, R2BusIn, R3BusIn, R4BusIn, R5BusIn, R6BusIn, R7BusIn, R8BusIn, R9BusIn,
+	Rselect[10], Rselect[11], Rselect[12], Rselect[13], Rselect[14], Rselect[15], HIselect, LOselect, ZHIselect, ZLOselect,
+	Pselect, MDRselect, In_Portselect, Cselect, R0BusIn, R1BusIn, R2BusIn, R3BusIn, R4BusIn, R5BusIn, R6BusIn, R7BusIn, R8BusIn, R9BusIn,
 					R10BusIn, R11BusIn, R12BusIn, R13BusIn, R14BusIn, R15BusIn, HIBusIn, LOBusIn, ZHIBusIn, ZLOBusIn,
 					PCBusIn, MDRBusIn, InPortBusIn, C_Sign_Extnd, busMuxOut
 	);

@@ -2,7 +2,7 @@ module divider(A, B, Z);
     input signed [31:0] A, B;
     output wire signed [63:0] Z;
     reg signed [31:0] Q, A_abs, B_abs;
-    reg signed [32:0] M, M_twos, temp;
+    reg signed [32:0] M, M_twos,  ;
     reg [64:0] shifted;
     reg dividend_sign, divisor_sign;
     integer i;

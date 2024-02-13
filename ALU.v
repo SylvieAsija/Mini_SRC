@@ -32,7 +32,7 @@ module ALU(input [31:0] b, y, input [4:0] control, input con_flag, input IncPC, 
 	
 	//Multiplication 
 	
-	boothIt mul(
+	boothMultiplier mul(
 	.a (y),
 	.b (b),
 	.c (mulOut));
@@ -66,7 +66,7 @@ module ALU(input [31:0] b, y, input [4:0] control, input con_flag, input IncPC, 
 	
 	// Note: Most of the operations only use the first 32 bits, the high 32 bits are
 	// only used for the multiplication and the division factors.  
-	always @(negedge clock)	begin
+	always @(negedge clock)	begin //happens on neg edge so that value is ready on pos edge
 		if(IncPC == 1) begin
                 result[31:0] = b[31:0] + 1'b1;
                 result[63:32] = 32'h00000000;
