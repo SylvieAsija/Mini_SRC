@@ -30,7 +30,7 @@ module boothMultiplier (
         // Compute partial products
         for(i=0;i<16;i=i+1)	begin
             
-            case(Bits[i])
+            case(recodedBits[i])
                 recoded
                 //bit =  +1, partial product = a
                 3'b001 , 3'b010 : partProd[i] = {a[31],a};
