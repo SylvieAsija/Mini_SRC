@@ -5,7 +5,7 @@ module divider_tb;
 reg [31:0] a, b;
 wire [63:0] q;
 
-divider div(a,b,q);
+divider divz(a,b,q);
 
 initial
 	begin

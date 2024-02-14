@@ -1,4 +1,4 @@
-module ALU(input [31:0] b, y, input [4:0] control, input con_flag, input IncPC, input wire clock, output reg [63:0] result);
+module ALU(input [31:0] b, y, input [4:0] control, input wire clock, output reg [63:0] result);
 	//Y register is the 'temp register' that holds the value 
 	
 	wire [31:0] addOut, subOut, negOut;
@@ -6,9 +6,8 @@ module ALU(input [31:0] b, y, input [4:0] control, input con_flag, input IncPC, 
 	reg first, last; 
 	wire cOutAdd,cOutSub, cOutNeg;
 	reg [31:0] temp;
-	wire [31:0] valOne, tempResult;
+	wire [31:0] tempResult;
 
-	valOne = {31'b0, 1'b1}
 	
 	//Subtraction
 	
@@ -45,19 +44,20 @@ module ALU(input [31:0] b, y, input [4:0] control, input con_flag, input IncPC, 
 	.B (b),
 	.Z (divOut));
 	
-	parameter	or_opcode = 5'b00110,
-               	and_opcode = 5'b00101,
-               	shr_opcode = 5'b00111,
-               	shra_opcode = 5'b01000,
-               	shl_opcode = 5'b01001,
-               	ror_opcode = 5'b01010,
-               	rol_opcode = 5'b01011,
+	parameter	or_opcode = 5'b01011,
+               	and_opcode = 5'b01010,
+               	shr_opcode = 5'b00101,
+               	shra_opcode = 5'b00110,
+               	shl_opcode = 5'b00111,
+               	ror_opcode = 5'b01000,
+               	rol_opcode = 5'b01001,
                	negate_opcode = 5'b10001,
                	not_opcode = 5'b10010,
                	ADD_opcode = 5'b00011,
                	SUBTRACT_opcode = 5'b00100,
                	MULTIPLY_opcode = 5'b01111,
                	DIVISION_opcode = 5'b10000,
+						INCREMENT_opcode = 5'b11111;
 					
 	
 	// Controls which output comes out of the ALU
@@ -66,13 +66,13 @@ module ALU(input [31:0] b, y, input [4:0] control, input con_flag, input IncPC, 
 	
 	// Note: Most of the operations only use the first 32 bits, the high 32 bits are
 	// only used for the multiplication and the division factors.  
-	always @(negedge clock)	begin //happens on neg edge so that value is ready on pos edge
-		if(IncPC == 1) begin
-                result[31:0] = b[31:0] + 1'b1;
-                result[63:32] = 32'h00000000;
-		end
-		else 					
-		begin
+always @(negedge clock)	begin
+//		if(IncPC == 1) begin
+//                result[31:0] = b[31:0] + 1'b1;
+//                result[63:32] = 32'h00000000;
+//		end
+//		else 	
+//begin				
 			case(control)
 				or_opcode: begin 
 					result[31:0] = y || b;
@@ -169,13 +169,15 @@ module ALU(input [31:0] b, y, input [4:0] control, input con_flag, input IncPC, 
 						endcase					
 				end
 				negate_opcode: begin
-					tempResult[31:0] = ~b;
-					carryRippleAdder forNeg(.a (valOne),
-											.b (tempResult),
-											.cin(1'b0),
-											.s (negOut),
-											.cout(cOutNeg));
-					result[63:0] = {32'b0, tempResult [31:0]};
+//					tempResult[31:0] = ~b;
+//					carryRippleAdder forNeg(.a (1'b1),
+//											.b (tempResult),
+//											.cin(1'b0),
+//											.s (negOut),
+//											.cout(cOutNeg));
+//					result[63:0] = {32'b0, tempResult [31:0]};
+					result[31:0] = -b;
+					result[63:32] = 32'h00000000;
 				end
 				not_opcode: begin
 					result[31:0] = ~b;
@@ -195,9 +197,12 @@ module ALU(input [31:0] b, y, input [4:0] control, input con_flag, input IncPC, 
 				DIVISION_opcode: begin
 					result = divOut[63:0];
 				end
+				INCREMENT_opcode: begin
+					result[31:0] = b[31:0] + 1'b1;
+					result[63:32] = 32'h00000000;
+				end
 				default:
 					result = 64'h0000000000000000;
 			endcase
 		end 
-	end 
 endmodule
