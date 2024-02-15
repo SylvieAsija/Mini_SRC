@@ -7,11 +7,9 @@ module Bus(input wire R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en
 	wire [4:0] select;
 	reg [31:0] muxin;
 	
-	always @(Cen, In_Porten, MDRen, Pen, ZLOen, ZHIen, LOen, HIen, R15en, R14en,
-					R13en, R12en, R11en, R10en, R9en, R8en, R7en, R6en, R5en, R4en,
-					R3en, R2en, R1en, R0en)
+	always @(*)
 		begin
-			muxin = {{8'b0},Cen, In_Porten, MDRen, Pen, ZLOen, ZHIen, LOen, HIen, R15en, R14en,
+			muxin = {Cen, In_Porten, MDRen, Pen, ZLOen, ZHIen, LOen, HIen, R15en, R14en,
 					R13en, R12en, R11en, R10en, R9en, R8en, R7en, R6en, R5en, R4en,
 					R3en, R2en, R1en, R0en};
 		end
@@ -19,7 +17,7 @@ module Bus(input wire R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en
 	Encoder_32 encoder(select, muxin);
 	
 	Multiplexer_32 mux(R0BusIn, R1BusIn, R2BusIn, R3BusIn, R4BusIn, R5BusIn, R6BusIn, R7BusIn, R8BusIn, R9BusIn,
-					R10BusIn, R11BusIn, R12BusIn, R13BusIn, R14BusIn, R15BusIn, HIBusIn, LOBusIn, ZHIBusIn, ZLOBusIn,
-					PCBusIn, MDRBusIn, C_Sign_Extnd, InPortBusIn, select, busMuxOut);
+					R10BusIn, R11BusIn, R12BusIn, R13BusIn, R14BusIn, R15BusIn, HIBusIn, LOBusIn, ZHIBusIn, ZLOBusIn, C_Sign_Extnd, 
+					PCBusIn, MDRBusIn, InPortBusIn, select, busMuxOut);
 
 endmodule

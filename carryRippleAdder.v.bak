@@ -1,7 +1,7 @@
 module carryRippleAdder(input [31:0] a, b, input wire cin, output wire[31:0] s, output wire cout);
     wire c01,c02,c03,c04,c05,c06,c07,c08,c09,c10;
     wire c11, c12, c13, c14, c15, c16, c17, c18, c19, c20;
-    wire c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, c31;
+    wire c21, c22, c23, c24, c25, c26, c27, c28, c29, c30;
 
     fullAdder fullAdder0(a[0], b[0], cin, s[0], c01);
 
