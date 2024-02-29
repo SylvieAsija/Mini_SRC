@@ -1,6 +1,6 @@
 `timescale 1ns/10ps
 
-module DataPath_tb;
+module DataPath_tb_div;
 	reg clr, clk,
 	 R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en,
 	 R10en, R11en, R12en, R13en, R14en, R15en, HIen, LOen, Zen,
@@ -81,7 +81,7 @@ module DataPath_tb;
 									alu_control<=5'b00000; Mdatain<=32'h00000000;
             end
                 Reg_load1a: begin
-                Mdatain <= 32'h00000015;
+                Mdatain <= 32'h0000000B;
                 #10 
 					 Read <= 1; 
 					 MDRen <= 1;
@@ -95,7 +95,7 @@ module DataPath_tb;
             end
             Reg_load2a: begin
 				MDROut <= 0; R2en <= 0;
-            Mdatain <= 32'h00000005;
+            Mdatain <= 32'h00000004;
 					Read <= 1; 
 					MDRen <= 1;
             end
@@ -142,7 +142,7 @@ module DataPath_tb;
             T4: begin
 					R2out <= 0; Yen <= 0;
 				
-					R3out <= 1; alu_control <= 5'b00011; ZLOen <= 1;
+					R3out <= 1; alu_control <= 5'b10000; ZLOen <= 1;
 					
             end
             T5: begin
@@ -153,18 +153,3 @@ module DataPath_tb;
             endcase
         end
 endmodule
-
-// Div -> h80000000
-// Mul -> h78000000
-// Add -> h18000000
-// Sub -> h40000000
-// Not -> h90000000
-// Neg -> h88000000
-// Rol -> h48000000
-// Ror -> h40000000
-// Shl -> h38000000
-// Sra -> h30000000
-// Shr -> h28000000
-// And -> h50000000
-// Or  -> h58000000
-

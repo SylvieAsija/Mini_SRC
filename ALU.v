@@ -14,7 +14,7 @@ module ALU(input [31:0] b, y, input [4:0] control, output reg [63:0] result);
 	carryRippleAdder crSub(
 	.a (y),
 	.b (-b),
-	.cin(1),
+	.cin(0),
 	.s (subOut),
 	.cout(cOutSub));
 	
@@ -102,7 +102,7 @@ always @(*)	begin
 		5'b00100 : result <= subOut;
 		5'b01111 : result <= mulOut;
 		5'b10000 : result <= divOut;
-		5'b11111 : result <= incOut;
+		5'b11111 : result <= 0;
 		
 		default : result <= orOut;
 	endcase
