@@ -9,6 +9,6 @@ module mar #(parameter qInit = 0)(input wire [31:0] busMuxOut, input wire MARen,
 				Q<=32'h00000000;
 			else if(MARen)
 				Q<= busMuxOut[31:0];
-		end
+		end //gonna need to change q to be [8:0] based on phase 2 I think
 		
 endmodule 
