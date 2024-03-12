@@ -5,8 +5,6 @@ module ALU(input [31:0] b, y, input [4:0] control, output reg [63:0] result);
 	wire [63:0] mulOut, divOut;
 	reg first, last; 
 	wire cOutAdd,cOutSub, cOutNeg;
-//	reg [31:0] temp;
-//	wire [31:0] tempResult;
 
 	
 	//Subtraction
@@ -83,10 +81,6 @@ module ALU(input [31:0] b, y, input [4:0] control, output reg [63:0] result);
 	
 	incPC inc(y, incOut);
 	
-	
-	
-					
-	 
 always @(*)	begin
 	case(control)
 		5'b01011 : result <= orOut;
