@@ -1,24 +1,26 @@
 module DataPath(
 	input wire clk, clr,
 		input wire [4:0] alu_control,
-      input wire [31:0] Mdatain,
+      input wire [31:0] Mdatain, 
 		input wire R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out, MDROut, HIout, LOout, ZHIout, ZLOout, Pout, Cout, Yout,
-		input wire IRen,MARen, MDRen, Read, Yen, Pen, ZHIen, ZLOen, HIen, LOen, R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en, R10en, R11en, R12en, R13en, R14en, R15en
+		input wire IRen, MARen, MDRen, Read, Write, Yen, Pen, ZHIen, ZLOen, HIen, LOen, R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en, R10en, R11en, R12en, R13en, R14en, R15en,
+		Gra, Grb, Grc, BAout, ConIn
 	); 
 
-//	wire BAout;
+
 	wire Zen, Out_Porten, Cen, Write, In_Porten;
 	
 	wire [31:0] R0BusIn, R1BusIn, R2BusIn, R3BusIn, R4BusIn, R5BusIn, R6BusIn, R7BusIn, R8BusIn, R9BusIn,
 					R10BusIn, R11BusIn, R12BusIn, R13BusIn, R14BusIn, R15BusIn, HIBusIn, LOBusIn, ZHIBusIn, ZLOBusIn,
-					PCBusIn, MDRBusIn, InPortBusIn, IRoutput, alu_input, C_Sign_Extnd, ramDataOut, busMuxOut;
+					PCBusIn, MDRBusIn, InPortBusIn, IRoutput, alu_input, C_Sign_Extnd, ramDataOut, busMuxOut, 
+					BusMuxInIR, ramOut;
 	wire [15:0] Ren_control, Rselect_control, Ren_se, Rselect_se;				
-//	wire [8:0] MARoutput;
 	wire [63:0] alu_result;
+	wire [8:0] address;
 	
 	
 	//Create Reg 0-15
-	register r0 (clr, clk, R0en, busMuxOut, R0BusIn);
+	register0 r0 (clr, clk, R0en, busMuxOut, R0BusIn);
 	register r1 (clr, clk, R1en, busMuxOut, R1BusIn);
 	register r2 (clr, clk, R2en, busMuxOut, R2BusIn);
 	register r3 (clr, clk, R3en, busMuxOut, R3BusIn);
@@ -47,7 +49,7 @@ module DataPath(
 	
 		//memory registers
 	memoryDataRegister mdr(clk, clr, MDRen, Read, Mdatain,  busMuxOut, MDRBusIn);
-//	mar maR(.busMuxOut(busMuxOut), .MARen(MARen), .clr(clr), .clk(clk), .Q(MARoutput));
+ MAR mar(clk, clear, MARen, BusMuxOut,address);
 
 
 //Bus
@@ -55,7 +57,12 @@ Bus bus( R0BusIn,  R1BusIn,  R2BusIn,  R3BusIn,  R4BusIn,  R5BusIn,  R6BusIn,  R
  HIBusIn, LOBusIn, ZHIBusIn, ZLOBusIn, PCBusIn, MDRBusIn, InPortBusIn, C_Sign_Extnd,
  R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out, MDROut, HIout, LOout, ZHIout, ZLOout, Pout, Cout, InPortout, busMuxOut
  );
+ 
+ conff CONFF(BusMuxOut, BusMuxInIR, ConIn, incPC);
+ 
+ SelectEncode selectencode(BusMuxInIR, Gra, Grb, Grc, Rin, Rout, BAout, C_Sign_Extnd, R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en, R10en, R11en, R12en, R13en, R14en, R15en, R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out);
 	
+RAM ram(Read, Write,clk, address, MDRBusIn, ramOut)	
 	
 
 ALU alu(busMuxOut, alu_input, alu_control, alu_result[63:0]);

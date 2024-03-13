@@ -1,14 +1,16 @@
-module mar #(parameter qInit = 0)(input wire [31:0] busMuxOut, input wire MARen, input wire clr, input wire clk, output reg [31:0] Q);
-	initial begin
-	
-		Q = qInit;
-		end
-	always @(*) 
+module MAR(input clock, input clear, input MARin, input [31:0] BusMuxOut, output [8:0] Address);
+
+reg [31:0] q;  
+	always @ ( posedge clock) 
 		begin
-			if (clr)
-				Q<=32'h00000000;
-			else if(MARen)
-				Q<= busMuxOut[31:0];
-		end
-		
-endmodule 
+			if(clear) begin
+				q <= 32'b0;
+			end
+			else if(MARin) begin 
+				q <= BusMuxOut;
+			end
+		end	
+	 
+	assign Address = q[8:0];	
+			
+endmodule
