@@ -1,12 +1,12 @@
 `timescale 1ns/10ps
 
-module DataPath_tb_inout;
+module DataPath_tb_inoout;
 	reg clr, clk,
 	 R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en,
 	 R10en, R11en, R12en, R13en, R14en, R15en, HIen, LOen, Zen,
 	 Pen, MDRen, In_Porten, Cen, IRen, MARen, Yen, ZLOen, ZHIen, ZLOout, ZHIout, R0out, R1out, R2out, R3out, R4out, R5out, 
-	 R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out, MDROut,Pout, Cout, Outport, HIout, LOout, Yout,
-	 Write, Read, Gra, Grb, Grc, Rin, Rout, BAout, ConIn; 
+	 R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out, MDROut,Pout, Cout, Inportout, HIout, LOout, Yout,
+	 Write, Read; 
 
 	reg [31:0] Mdatain;
 	reg [4:0] alu_control;
@@ -26,7 +26,7 @@ module DataPath_tb_inout;
 	 MDROut, HIout, LOout, ZHIout, ZLOout, Pout, Cout, Yout,
 	 IRen,MARen, MDRen, Read, Write, Yen, Pen, ZHIen, ZLOen, HIen, LOen,
 	R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en, R10en, R11en, R12en, R13en, R14en, R15en,
-	Gra, Grb, Grc, BAout, ConIn, Rin, Rout
+	Gra, Grb, Grc, BAout, ConIn
 	);
 	
 
@@ -67,38 +67,38 @@ module DataPath_tb_inout;
             end
 
             T0: begin 
-				   #5 Pout <= 1;
-					#5 MARen <= 1;
+				   MDROut <= 0; R1en <= 0;
+					Pout <= 1; MARen <= 1; alu_control <= 5'b11111; ZLOen <= 1;
             end
             T1: begin
-					#5 Pout <= 0;
-					#5 Read <= 1;
-					#5 MDRen <= 1;
+					Pout <= 0; MARen <= 0; ZLOen <= 0;
+					 
+					Mdatain <= 32'h28918000;
+					ZLOout <= 1; Pen <= 1; Read <= 1; MDRen <= 1;
 				
             end
             T2: begin
-				   #5 Read <= 0;
-					#5 MARen <= 0;
-					#5 MDRen <= 0;
-					#5 MDROut <= 1;
-					#5 IRen <= 1;
+				   ZLOout <= 0; Pen <= 0; Read <= 0; MDRen <= 0;
+					MDROut <= 1; IRen <= 1;
 					
             end
             T3: begin
-					#5 MDROut <= 0;
-					#5 IRen <= 0;
-					#5 Gra <= 1;
-					#5 Rout <= 1;
-					#5 Outport <= 1;
+					MDROut <= 0; IRen <= 0;
+					
+					R2out <= 1; Yen <= 1;
 				
             end
-//            T4: begin
-//					
-//					
-//            end
-//            T5: begin
-//					
-//            end
+            T4: begin
+					R2out <= 0; Yen <= 0;
+				
+					R3out <= 1; alu_control <= 5'b00011; ZLOen <= 1;
+					
+            end
+            T5: begin
+					R3out <= 0; ZLOen <= 0;
+					
+					ZLOout <= 1; R1en <= 1;
+            end
             endcase
         end
 endmodule

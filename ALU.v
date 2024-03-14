@@ -79,7 +79,7 @@ module ALU(input [31:0] b, y, input [4:0] control, output reg [63:0] result);
 	
 	//Increment PC
 	
-	incPC inc(y, incOut);
+	//incPC inc();
 	
 always @(*)	begin
 	case(control)

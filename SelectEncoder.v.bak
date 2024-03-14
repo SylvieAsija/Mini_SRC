@@ -98,7 +98,7 @@ always @ (*) begin
     C_sign_extended = {{13{IR[18]}}, {IR[18:0]}};
 	 
 end
-assign {R15en, R14en, R13en, R12en, R11en, R10en, R9en, R8en, R7en, R6en, R5en, R4en, R3en, R2en, R1en, R0en} = In;
+assign {R15in, R14in, R13in, R12in, R11in, R10in, R9in, R8in, R7in, R6in, R5in, R4in, R3in, R2in, R1in, R0in} = In;
 assign {R15out, R14out, R13out, R12out, R11out, R10out, R9out, R8out, R7out, R6out, R5out, R4out, R3out, R2out, R1out, R0out} = Out;
 assign C_sign = C_sign_extended;
 
