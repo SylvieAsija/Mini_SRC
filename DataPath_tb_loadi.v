@@ -1,6 +1,6 @@
 `timescale 1ns/10ps
 
-module DataPath_tb_inout;
+module DataPath_tb_loadi;
 	reg clr, clk,
 	 R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en,
 	 R10en, R11en, R12en, R13en, R14en, R15en, HIen, LOen, Zen,
@@ -23,7 +23,7 @@ module DataPath_tb_inout;
 	 
 	DataPath dut(clk, clr, alu_control, Mdatain, 
 	R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out, 
-	 MDROut, Outport, LOout, ZHIout, ZLOout, Pout, Cout, Yout,
+	 MDROut, HIout, LOout, ZHIout, ZLOout, Pout, Cout, Yout,
 	 IRen,MARen, MDRen, Read, Write, Yen, Pen, ZHIen, ZLOen, HIen, LOen,
 	R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en, R10en, R11en, R12en, R13en, R14en, R15en,
 	Gra, Grb, Grc, BAout, ConIn, Rin, Rout
@@ -67,13 +67,13 @@ module DataPath_tb_inout;
             end
 
             T0: begin 
-				   #5 Pout <= 1;
-					#5 MARen <= 1;
+				    Pout <= 1;
+					 MARen <= 1;
             end
             T1: begin
-					#5 Pout <= 0;
-					#5 Read <= 1;
-					#5 MDRen <= 1;
+					 Pout <= 0;
+					 Read <= 1;
+					 MDRen <= 1;
 				
             end
             T2: begin
@@ -89,7 +89,7 @@ module DataPath_tb_inout;
 					 IRen <= 0;
 					 Gra <= 1;
 					 Rout <= 1;
-					 Outport <= 1;
+					 Pen<=1;
 				
             end
 //            T4: begin
@@ -102,6 +102,3 @@ module DataPath_tb_inout;
             endcase
         end
 endmodule
-
-// Is this what we want to see?
-// Whats with the in R4?

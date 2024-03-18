@@ -102,6 +102,3 @@ module DataPath_tb_inout;
             endcase
         end
 endmodule
-
-// Is this what we want to see?
-// Whats with the in R4?
