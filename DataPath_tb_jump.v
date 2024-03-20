@@ -44,11 +44,7 @@ module DataPath_tb_jump;
     always @(posedge clk) // finite state machine; if clock rising-edge
         begin
             case (Present_state)
-                Default : Present_state = Reg_load1a;
-					 Reg_load1a : Present_state = Reg_load1b;
-					 Reg_load1b : Present_state = Reg_load1c;
-					 Reg_load1c : Present_state = Reg_load1d;
-					 Reg_load1d : Present_state = T0;
+                Default : Present_state = T0;
                 T0 : Present_state = T1;
                 T1 : Present_state = T2;
                 T2 : Present_state = T3;
@@ -74,29 +70,10 @@ module DataPath_tb_jump;
  									alu_control<=5'b00000; Mdatain<=32'h00000000;
             end
 				
-				Reg_load1a: begin
-					Mdatain <= 32'hFFFFFFFF; 
-					Read <= 1; MARen <= 1; 
-				end
-				Reg_load1b: begin
-					MARen <= 0;
-					Read <= 0; 				
-				end
-				Reg_load1c: begin
-					Mdatain<=32'h0000000`1;
-					Read<=1;
-					MDRen<=1;
-					R6en <= 1;
-				end
-				Reg_load1d: begin
-					Read<=0;
-					MDRen<=0;
-					R6en <= 0;
-				end
             T0: begin
-				    Read <= 1;
+				    Pout <= 1;
 					 MARen<=1;
-					 MDRen<1;
+
             end
             T1: begin
 					 Pout <= 0;
@@ -117,8 +94,8 @@ module DataPath_tb_jump;
 					 IRen <= 0;
 					 Gra <= 1;
 					 Rout <= 1;
-					 R6en<=1;
 					 Pen<=1;
+					 BAout <= 1;
 				
             end
 //            T4: begin

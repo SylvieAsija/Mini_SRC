@@ -87,18 +87,26 @@ module DataPath_tb_loadi;
             T3: begin
 					 MDROut <= 0;
 					 IRen <= 0;
-					 Gra <= 1;
-					 Rout <= 1;
-					 Pen<=1;
+					 Grb <= 1;
+					 BAout <= 1;
+					 Yen <= 1;
 				
             end
-//            T4: begin
-//				
-//					
-//            end
-//            T5: begin
-//					
-//            end
+            T4: begin
+					 BAout <= 0;
+					 Yen <= 0;
+					 Cout <= 1;
+					 alu_control <= 5'b00011;
+					 Zen <= 1;
+					
+            end
+            T5: begin
+					 Cout <= 0;
+					 Zen <= 0;
+					 ZLOout <= 1;
+					 Gra <= 1;
+					 Rin <= 1;
+            end
             endcase
         end
 endmodule

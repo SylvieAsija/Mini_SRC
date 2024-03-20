@@ -1,6 +1,6 @@
 `timescale 1ns/10ps
 
-module DataPath_tb_mfhi;
+module DataPath_tb_addi;
 	reg clr, clk,
 	 R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en,
 	 R10en, R11en, R12en, R13en, R14en, R15en, HIen, LOen, Zen,
@@ -23,7 +23,7 @@ module DataPath_tb_mfhi;
 	 
 	DataPath dut(clk, clr, alu_control, Mdatain, 
 	R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out, 
-	 MDROut, HIout, LOout, ZHIout, ZLOout, Pout, Cout, Yout,
+	 MDROut, Outport, LOout, ZHIout, ZLOout, Pout, Cout, Yout,
 	 IRen,MARen, MDRen, Read, Write, Yen, Pen, ZHIen, ZLOen, HIen, LOen,
 	R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en, R10en, R11en, R12en, R13en, R14en, R15en,
 	Gra, Grb, Grc, BAout, ConIn, Rin, Rout
@@ -60,20 +60,20 @@ module DataPath_tb_mfhi;
 					Pen<=0; MDRen<=0; In_Porten<=0; Cen<=0; IRen<=0; MARen<=0; Yen<=0;
 					R0out<=0; R1out<=0; R2out<=0; R3out<=0; R4out<=0; R5out<=0; R6out<=0; R7out<=0; R8out<=0; R9out<=0;
 					R10out<=0; R11out<=0; R12out<=0; R13out<=0; R14out<=0; R15out<=0; ZHIout<=0; ZLOout<=0; Zen<=0;
-					Pout<=0; MDROut<=0; Cout<=0; Outport<=0; HIout<=0; 
+					Pout<=0; MDROut<=0; Cout<=0; Outport<=0; 
 					Read<=0; Write <= 0; Gra<=0; Grb<=0; Grc<=0; BAout<=0; ConIn<=0;
 					Rin<=0; Rout<=0; BAout<=0;
  									alu_control<=5'b00000; Mdatain<=32'h00000000;
             end
 
             T0: begin 
-				    Pout <= 1;
-					 MARen <= 1;
+				   #5 Pout <= 1;
+					#5 MARen <= 1;
             end
             T1: begin
-					 Pout <= 0;
-					 Read <= 1;
-					 MDRen <= 1;
+					#5 Pout <= 0;
+					#5 Read <= 1;
+					#5 MDRen <= 1;
 				
             end
             T2: begin
@@ -87,17 +87,27 @@ module DataPath_tb_mfhi;
             T3: begin
 					 MDROut <= 0;
 					 IRen <= 0;
-					 Gra <= 1;
-					 Rin <= 1;
-					 HIout <= 1;
-			   end
-//            T4: begin
-//				
-//					
-//            end
-//            T5: begin
-//					
-//            end
+					 Grb <= 1;
+					 Rout <= 1;
+					 Yen <= 1;
+				
+            end
+            T4: begin
+					Grb <= 0;
+					Rout <= 0;
+					Yen <= 0;
+					Cout <= 1;
+					alu_control <= 5b'00011;
+					Zen <= 1;
+					
+            end
+            T5: begin
+					Cout <= 0;
+					Zen <= 0;
+					ZLOout <= 1;
+					Gra <= 1;
+					Rin <= 1;
+            end
             endcase
         end
 endmodule

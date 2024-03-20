@@ -60,7 +60,7 @@ module DataPath_tb_mflo;
 					Pen<=0; MDRen<=0; In_Porten<=0; Cen<=0; IRen<=0; MARen<=0; Yen<=0;
 					R0out<=0; R1out<=0; R2out<=0; R3out<=0; R4out<=0; R5out<=0; R6out<=0; R7out<=0; R8out<=0; R9out<=0;
 					R10out<=0; R11out<=0; R12out<=0; R13out<=0; R14out<=0; R15out<=0; ZHIout<=0; ZLOout<=0; Zen<=0;
-					Pout<=0; MDROut<=0; Cout<=0; Outport<=0; 
+					Pout<=0; MDROut<=0; Cout<=0; Outport<=0; LOout<=0;
 					Read<=0; Write <= 0; Gra<=0; Grb<=0; Grc<=0; BAout<=0; ConIn<=0;
 					Rin<=0; Rout<=0; BAout<=0;
  									alu_control<=5'b00000; Mdatain<=32'h00000000;
@@ -88,8 +88,8 @@ module DataPath_tb_mflo;
 					 MDROut <= 0;
 					 IRen <= 0;
 					 Gra <= 1;
-					 Rout <= 1;
-					 Pen<=1;
+					 Rin <= 1;
+					 LOout <= 1;
 				
             end
 //            T4: begin
