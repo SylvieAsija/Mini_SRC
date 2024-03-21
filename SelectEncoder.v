@@ -26,80 +26,82 @@ always @ (*) begin
 	 Rc = IR[18:15];
 
     if(Gra == 1) begin 
-        DecoderInput = Ra;
+        DecoderInput <= Ra;
 	 end
     else if(Grb == 1) begin 
-        DecoderInput = Rb;
+        DecoderInput <= Rb;
 	 end
     else if(Grc == 1) begin 
-        DecoderInput = Rc;
+        DecoderInput <= Rc;
 	 end
 
     if(DecoderInput == 4'b0000) begin
-        DecoderOutput = 16'b0000000000000001;
+        DecoderOutput <= 16'b0000000000000001;
     end
     else if(DecoderInput == 4'b0001) begin
-        DecoderOutput = 16'b0000000000000010;
+        DecoderOutput <= 16'b0000000000000010;
     end
     else if(DecoderInput == 4'b0010) begin
-        DecoderOutput = 16'b0000000000000100;
+        DecoderOutput <= 16'b0000000000000100;
     end
     else if(DecoderInput == 4'b0011) begin
-        DecoderOutput = 16'b0000000000001000;
+        DecoderOutput <= 16'b0000000000001000;
     end
     else if(DecoderInput == 4'b0100) begin
-        DecoderOutput = 16'b0000000000010000;
+        DecoderOutput <= 16'b0000000000010000;
     end
     else if(DecoderInput == 4'b0101) begin
-        DecoderOutput = 16'b0000000000100000;
+        DecoderOutput <= 16'b0000000000100000;
     end
     else if(DecoderInput == 4'b0110) begin
-        DecoderOutput = 16'b0000000001000000;
+        DecoderOutput <= 16'b0000000001000000;
     end
     else if(DecoderInput == 4'b0111) begin
-        DecoderOutput = 16'b0000000010000000;
+        DecoderOutput <= 16'b0000000010000000;
     end
     else if(DecoderInput == 4'b1000) begin
-        DecoderOutput = 16'b0000000100000000;
+        DecoderOutput <= 16'b0000000100000000;
     end
     else if(DecoderInput == 4'b1001) begin
-        DecoderOutput = 16'b0000001000000000;
+        DecoderOutput <= 16'b0000001000000000;
     end
     else if(DecoderInput == 4'b1010) begin
-        DecoderOutput = 16'b0000010000000000;
+        DecoderOutput <= 16'b0000010000000000;
     end
     else if(DecoderInput == 4'b1011) begin
-        DecoderOutput = 16'b0000100000000000;
+        DecoderOutput <= 16'b0000100000000000;
     end
     else if(DecoderInput == 4'b1100) begin
-        DecoderOutput = 16'b0001000000000000;
+        DecoderOutput <= 16'b0001000000000000;
     end
     else if(DecoderInput == 4'b1101) begin
-        DecoderOutput = 16'b0010000000000000;
+        DecoderOutput <= 16'b0010000000000000;
     end
     else if(DecoderInput == 4'b1110) begin
-        DecoderOutput = 16'b0100000000000000;
+        DecoderOutput <= 16'b0100000000000000;
     end
     else if(DecoderInput == 4'b1111) begin
-        DecoderOutput = 16'b1000000000000000;
+        DecoderOutput <= 16'b1000000000000000;
     end
 	 else begin 
-		DecoderOutput = 16'b0000000000000000;
+		DecoderOutput <= 16'b0000000000000000;
 	 end 
-    for (i = 0 ; i < 16 ; i = i + 1)
-        In[i] = DecoderOutput[i] & Rin;
-	 temp = Rout | BAout;
+//    for (i = 0 ; i < 16 ; i = i + 1)
+//        In[i] <= DecoderOutput[i] & Rin;
+//	 temp <= Rout | BAout;
 	 
 	 //this line is the same as loop below so choose one
 //	 Out = DecoderOutput & {16{temp}}
 
-    for (i = 0 ; i < 16 ; i = i + 1)
-        Out[i] = DecoderOutput[i] & temp;
-    C_sign_extended = {{13{IR[18]}}, {IR[18:0]}};
+//    for (i = 0 ; i < 16 ; i = i + 1)
+//        Out[i] <= DecoderOutput[i] & temp;
+//    C_sign_extended <= {{13{IR[18]}}, {IR[18:0]}};
 	 
 end
-assign {R15en, R14en, R13en, R12en, R11en, R10en, R9en, R8en, R7en, R6en, R5en, R4en, R3en, R2en, R1en, R0en} = In;
-assign {R15out, R14out, R13out, R12out, R11out, R10out, R9out, R8out, R7out, R6out, R5out, R4out, R3out, R2out, R1out, R0out} = Out;
+assign temp = Rout | BAout;
+assign C_sign_extended = {{13{IR[18]}}, {IR[18:0]}};
+assign {R15en, R14en, R13en, R12en, R11en, R10en, R9en, R8en, R7en, R6en, R5en, R4en, R3en, R2en, R1en, R0en} = DecoderOutput & {{16{Rin}}};
+assign {R15out, R14out, R13out, R12out, R11out, R10out, R9out, R8out, R7out, R6out, R5out, R4out, R3out, R2out, R1out, R0out} = DecoderOutput & {{16{temp}}};
 assign C_sign = C_sign_extended;
 
 //SelectEncode SE (.Rout(R0out, R1Out, R2out, ...)

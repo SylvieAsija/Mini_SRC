@@ -74,13 +74,13 @@ module DataPath_tb_load;
             end
             T1: begin
 					 Pout <= 0;
+					 MARen <= 0;
 					 Read <= 1;
 					 MDRen <= 1;
 				
             end
             T2: begin
 				    Read <= 0;
-					 MARen <= 0;
 					 MDRen <= 0;
 					 MDROut <= 1;
 					 IRen <= 1;
@@ -89,12 +89,12 @@ module DataPath_tb_load;
             T3: begin
 					 MDROut <= 0;
 					 IRen <= 0;
-					 Grb <= 1;
-					 BAoout <= 1;
+					 Gra <= 1;
+					 BAout <= 1;
 					 Yen <= 1;
             end
             T4: begin
-					 Grb <= 0;
+					 Gra <= 0;
 					 BAout <= 0;
 					 Yen <= 0;
 					 Cout <= 1;

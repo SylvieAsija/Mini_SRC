@@ -1,7 +1,10 @@
 module MAR(input clock, input clear, input MARin, input [31:0] BusMuxOut, output [8:0] Address);
 
 reg [31:0] q;  
-	always @ ( posedge clock) 
+
+	initial q = 0;
+	
+	always @ (posedge clock) 
 		begin
 			if(clear) begin
 				q <= 32'b0;
@@ -11,6 +14,6 @@ reg [31:0] q;
 			end
 		end	
 	 
-	assign Address = q[8:0];	
+	assign Address = q[8:0];
 			
 endmodule
