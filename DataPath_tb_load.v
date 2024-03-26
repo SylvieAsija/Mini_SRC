@@ -20,6 +20,7 @@ module DataPath_tb_load;
 	parameter T5 = 4'b1100;
 	parameter T6 = 4'b1101;
 	parameter T7 = 4'b1110;
+	parameter T8 = 4'b1111;
    reg [3:0] Present_state = Default;
 	 
 	DataPath dut(clk, clr, alu_control, Mdatain, 
@@ -49,6 +50,7 @@ module DataPath_tb_load;
                 T4 : Present_state = T5;
 					 T5 : Present_state = T6;
 					 T6 : Present_state = T7;
+					 T7 : Present_state = T8;
             endcase
         end
 		  
@@ -124,6 +126,11 @@ module DataPath_tb_load;
 					Rin <= 1;
 					
             end
+				T8: begin
+					Gra <= 0;
+					Rin <= 0;
+					MDROut <= 0;
+				end
             endcase
         end
 endmodule

@@ -13,7 +13,7 @@ module DataPath(
 	wire [31:0] R0BusIn, R1BusIn, R2BusIn, R3BusIn, R4BusIn, R5BusIn, R6BusIn, R7BusIn, R8BusIn, R9BusIn,
 					R10BusIn, R11BusIn, R12BusIn, R13BusIn, R14BusIn, R15BusIn, HIBusIn, LOBusIn, ZHIBusIn, ZLOBusIn,
 					PCBusIn, MDRBusIn, InPortBusIn, IRoutput, alu_input, C_Sign_Extnd, ramDataOut, busMuxOut, 
-					BusMuxInIR, ramOut, R0mid;
+					BusMuxInIR, ramOut, R0mid, InPortout;
 	wire [15:0] Ren_control, Rselect_control, Ren_se, Rselect_se;				
 	wire [63:0] alu_result;
 	wire [8:0] address;
@@ -49,8 +49,8 @@ module DataPath(
    register LOreg(clr, clk, LOen, busMuxOut, LOBusIn);
 	
 		//memory registers
-	memoryDataRegister mdr(clk, clr, MDRen, Read, Mdatain,  busMuxOut, MDRBusIn);
- MAR mar(clk, clear, MARen, busMuxOut,address);
+	memoryDataRegister mdr(clk, clr, MDRen, Read, ramOut,  busMuxOut, MDRBusIn);
+   MAR mar(clk, clr, MARen, busMuxOut, address);
 
 
 //Bus
@@ -61,7 +61,7 @@ Bus bus( R0BusIn,  R1BusIn,  R2BusIn,  R3BusIn,  R4BusIn,  R5BusIn,  R6BusIn,  R
  
  conff CONFF(busMuxOut, BusMuxInIR, ConIn, Pen);
  
- SelectEncode selectencode(BusMuxInIR, Gra, Grb, Grc, Rin, Rout, BAout, C_Sign_Extnd, R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en, R10en, R11en, R12en, R13en, R14en, R15en, R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out);
+ SelectEncoder selectencode(BusMuxInIR, Gra, Brb, Grc, Rin, Rout, BAout, C_Sign_Extnd, R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out, R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en, R10en, R11en, R12en, R13en, R14en, R15en);
 	
 RAM ram(Read, Write, clk, address, MDRBusIn, ramOut);
 	

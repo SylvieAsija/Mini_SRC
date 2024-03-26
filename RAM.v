@@ -2,7 +2,7 @@ module RAM (input read, write, clock, input [8:0] address, input [31:0] ramDataI
     reg [31:0] memory [0:511];
 	 
 	 initial begin
-		memory[0] <= 32'h01000095;
+		memory[0] <= 32'h01800095;
 		memory[149] <= 32'h000000FF;
 	 end
 

@@ -19,7 +19,7 @@ module DataPath_tb_st;
 	parameter T4 = 4'b1011; 
 	parameter T5 = 4'b1100;
 	parameter T6 = 4'b1101;
-	parameter T7 = 4'b1110
+	parameter T7 = 4'b1110;
    reg [3:0] Present_state = Default;
 	 
 	DataPath dut(clk, clr, alu_control, Mdatain, 
@@ -117,7 +117,7 @@ module DataPath_tb_st;
 					MDRen <= 1;
             end
 				T7: begin
-	            MDRin <= 0;
+	            MDRen <= 0;
                Grb <= 0;
                BAout <=0;
                Write <= 1;				
