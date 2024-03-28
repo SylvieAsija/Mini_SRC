@@ -20,7 +20,6 @@ module DataPath_tb_load;
 	parameter T5 = 4'b1100;
 	parameter T6 = 4'b1101;
 	parameter T7 = 4'b1110;
-	parameter T8 = 4'b1111;
    reg [3:0] Present_state = Default;
 	 
 	DataPath dut(clk, clr, alu_control, Mdatain, 
@@ -28,7 +27,7 @@ module DataPath_tb_load;
 	 MDROut, HIout, LOout, ZHIout, ZLOout, Pout, Cout, Yout,
 	 IRen,MARen, MDRen, Read, Write, Yen, Pen, ZHIen, ZLOen, HIen, LOen,
 	R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en, R10en, R11en, R12en, R13en, R14en, R15en,
-	Gra, Grb, Grc, BAout, ConIn, Rin, Rout
+	Gra, Grb, Grc, BAout, ConIn, Rin, Rout, Zen
 	);
 	
 
@@ -43,14 +42,13 @@ module DataPath_tb_load;
         begin
             case (Present_state)
                 Default : Present_state = T0;
-                T0 : Present_state = T1;
-                T1 : Present_state = T2;
-                T2 : Present_state = T3;
-                T3 : Present_state = T4;
-                T4 : Present_state = T5;
-					 T5 : Present_state = T6;
-					 T6 : Present_state = T7;
-					 T7 : Present_state = T8;
+                T0 : #40 Present_state = T1;
+                T1 : #40 Present_state = T2;
+                T2 : #40 Present_state = T3;
+                T3 : #40 Present_state = T4;
+                T4 : #40 Present_state = T5;
+					 T5 : #40 Present_state = T6;
+					 T6 : #40 Present_state = T7;
             endcase
         end
 		  
@@ -73,64 +71,69 @@ module DataPath_tb_load;
             T0: begin 
 				    Pout <= 1;
 					 MARen <= 1;
-            end
-            T1: begin
+					 #15
 					 Pout <= 0;
 					 MARen <= 0;
+            end
+            T1: begin
 					 Read <= 1;
 					 MDRen <= 1;
+					 #25
+					 Read <= 0;
+					 MDRen <= 0;
 				
             end
             T2: begin
-				    Read <= 0;
-					 MDRen <= 0;
 					 MDROut <= 1;
 					 IRen <= 1;
+					 #25
+					 MDROut <= 0;
+					 IRen <= 0;
 					
             end
             T3: begin
-					 MDROut <= 0;
-					 IRen <= 0;
-					 Gra <= 1;
+					 Grb <= 1;
 					 BAout <= 1;
 					 Yen <= 1;
-            end
-            T4: begin
-					 Gra <= 0;
+					 #25
+					 Grb <= 0;
 					 BAout <= 0;
 					 Yen <= 0;
+            end
+            T4: begin
 					 Cout <= 1;
 					 alu_control <= 5'b00011;
 					 Zen <= 1;
+					 #25
+					Cout <= 0;
+					Zen <= 0;
 					
             end
             T5: begin
-					Cout <= 0;
-					Zen <= 0;
 					ZLOout <= 1;
 					MARen <= 1;
+					#25
+					ZLOout <= 0;
+					MARen <= 0;
 					
             end
 				T6: begin
-					ZLOout <= 0;
-					MARen <= 0;
 					Read <= 1;
 					MDRen <= 1;
+					#25
+					Read <= 0;
+					MDRen <= 0;
 				
             end
 				T7: begin
-					Read <= 0;
-					MDRen <= 0;
 					MDROut <= 1;
 					Gra <= 1;
 					Rin <= 1;
-					
-            end
-				T8: begin
+					#25
 					Gra <= 0;
 					Rin <= 0;
 					MDROut <= 0;
-				end
+					end
             endcase
         end
 endmodule

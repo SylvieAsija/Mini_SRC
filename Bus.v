@@ -12,30 +12,30 @@ output wire [31:0] busMuxout
 reg [31:0]q;
 
 always @ (*) begin
-	if (R0out) q = R0BusIn;
-	if (R1out) q = R1BusIn;
-	if (R2out) q = R2BusIn;
-	if (R3out) q = R3BusIn;
-	if (R4out) q = R4BusIn;
-	if (R5out) q = R5BusIn;
-	if (R6out) q = R6BusIn;
-	if (R7out) q = R7BusIn;
-	if (R8out) q = R8BusIn;
-	if (R9out) q = R9BusIn;
-	if (R10out) q = R10BusIn;
-	if (R11out) q = R11BusIn;
-	if (R12out) q = R12BusIn;
-	if (R13out) q = R13BusIn;
-	if (R14out) q = R14BusIn;
-	if (R15out) q = R15BusIn;
-	if (Pout) q = PCBusIn;
-	if (HIout) q = HIBusIn;
-	if (LOout) q = LOBusIn;
-	if (ZHIout) q = ZHIBusIn;
-	if (ZLOout) q = ZLOBusIn;
-	if (MDROut) q = MDRBusIn;
-	if (InPortout) q = InPortBusIn;
-	if (Cout) q = C_Sign_Extnd;
+	if (R0out) q <= R0BusIn;
+	if (R1out) q <= R1BusIn;
+	if (R2out) q <= R2BusIn;
+	if (R3out) q <= R3BusIn;
+	if (R4out) q <= R4BusIn;
+	if (R5out) q <= R5BusIn;
+	if (R6out) q <= R6BusIn;
+	if (R7out) q <= R7BusIn;
+	if (R8out) q <= R8BusIn;
+	if (R9out) q <= R9BusIn;
+	if (R10out) q <= R10BusIn;
+	if (R11out) q <= R11BusIn;
+	if (R12out) q <= R12BusIn;
+	if (R13out) q <= R13BusIn;
+	if (R14out) q <= R14BusIn;
+	if (R15out) q <= R15BusIn;
+	if (Pout) q <= PCBusIn;
+	if (HIout) q <= HIBusIn;
+	if (LOout) q <= LOBusIn;
+	if (ZHIout) q <= ZHIBusIn;
+	if (ZLOout) q <= ZLOBusIn;
+	if (MDROut) q <= MDRBusIn;
+	if (InPortout) q <= InPortBusIn;
+	if (Cout) q <= C_Sign_Extnd;
 	
 end
 assign busMuxout = q[31:0];

@@ -97,7 +97,7 @@ module DataPath_tb_ori;
 					Rout <= 0;
 					Yen <= 0;
 					Cout <= 1;
-					alu_control <= 5b'00011;
+					alu_control <= 5'b00011;
 					Zen <= 1;
 					
             end

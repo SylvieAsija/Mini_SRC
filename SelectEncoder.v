@@ -24,16 +24,16 @@
 //
 //
 //always @ (*) begin
-////
-////    if(Gra == 1) begin 
-////        DecoderInput <= Ra;
-////	 end
-////    else if(Grb == 1) begin 
-////        DecoderInput <= Rb;
-////	 end
-////    else if(Grc == 1) begin 
-////        DecoderInput <= Rc;
-////	 end
+//
+//    if(Gra == 1) begin 
+//        DecoderInput <= Ra;
+//	 end
+//    else if(Grb == 1) begin 
+//        DecoderInput <= Rb;
+//	 end
+//    else if(Grc == 1) begin 
+//        DecoderInput <= Rc;
+//	 end
 //
 //	 DecoderInput <= (IR[26:23] & {4{Gra}}) | (IR[22:19] & {4{Grb}}) | (IR[18:15] & {4{Grc}});
 //
@@ -88,12 +88,12 @@
 //	 else begin 
 //		DecoderOutput <= 16'b0000000000000000;
 //	 end 
-////    for (i = 0 ; i < 16 ; i = i + 1)
-////        In[i] = DecoderOutput[i] & Rin;
-////	 temp = Rout | BAout;
-////    for (i = 0 ; i < 16 ; i = i + 1)
-////        Out[i] = DecoderOutput[i] & temp;
-////    C_sign_extended = {{13{IR[18]}}, {IR[18:0]}};
+//    for (i = 0 ; i < 16 ; i = i + 1)
+//        In[i] = DecoderOutput[i] & Rin;
+//	 temp = Rout | BAout;
+//    for (i = 0 ; i < 16 ; i = i + 1)
+//        Out[i] = DecoderOutput[i] & temp;
+//    C_sign_extended = {{13{IR[18]}}, {IR[18:0]}};
 //	 
 //end
 ////assign temp = Rout || BAout;
@@ -109,7 +109,7 @@
 
 
 `timescale 1ns/10ps
-module SelectEncoder(input [31:0] IR_out, input Gra, Grb, Grc, Rin, Rout, BAout, output [31:0] C_sign_extend, output R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out, R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en, R10en, R11en, R12en, R13en, R14en, R15en);
+module SelectEncoder(input [31:0] IR_out, input Gra, Grb, Grc, Rin, Rout, BAout, output [31:0] C_Sign_Extnd, output R15out, R14out, R13out, R12out, R11out, R10out, R9out, R8out, R7out, R6out, R5out, R4out, R3out, R2out, R1out, R0out, R15en, R14en, R13en, R12en, R11en, R10en, R9en, R8en, R7en, R6en, R5en, R4en, R3en, R2en, R1en, R0en);
 wire [3:0] RA, RB, RC, R_dec_in;
 wire [15:0] R_dec_out;
 assign RA = IR_out[26:23] & {4{Gra}};
@@ -117,9 +117,9 @@ assign RB = IR_out[22:19] & {4{Grb}};
 assign RC = IR_out[18:15] & {4{Grc}};
 assign R_dec_in = RA | RB | RC;
 decoder_4_16 DECOD(R_dec_in, R_dec_out);
-assign C_sign_extend = {{13{IR_out[18]}}, IR_out[18:0]};
-assign {R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en, R10en, R11en, R12en, R13en, R14en, R15en} = {16{Rin}} & R_dec_out;
-assign {R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out} = {16{Rout | BAout}} & R_dec_out;
+assign C_Sign_Extnd = {{13{IR_out[18]}}, IR_out[18:0]}; 
+assign {R15en, R14en, R13en, R12en, R11en, R10en, R9en, R8en, R7en, R6en, R5en, R4en, R3en, R2en, R1en, R0en} = {16{Rin}} & R_dec_out;
+assign {R15out, R14out, R13out, R12out, R11out, R10out, R9out, R8out, R7out, R6out, R5out, R4out, R3out, R2out, R1out, R0out} = {16{Rout | BAout}} & R_dec_out;
 endmodule
 
 
