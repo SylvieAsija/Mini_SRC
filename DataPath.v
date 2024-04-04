@@ -1,14 +1,16 @@
 module DataPath(
-	input wire clk, clr, stop,
+	input wire clk, clr,
 		input wire [4:0] alu_control,
       input wire [31:0] Mdatain, 
-		input wire R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out, MDROut, HIout, LOout, ZHIout, ZLOout, Pout, Cout, Yout,
-		input wire IRen, MARen, MDRen, Read, Write, Yen, Pen, ZHIen, ZLOen, HIen, LOen, R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en, R10en, R11en, R12en, R13en, R14en, R15en,
-		Gra, Grb, Grc, BAout, ConIn, Rin, Rout, Zen, Run
+		input wire MDROut, HIout, LOout, ZHIout, ZLOout, Pout, Cout, Yout,
+		input wire IRen, MARen, MDRen, Read, Write, Yen, Pen, ZHIen, ZLOen, HIen, LOen,
+		Gra, Grb, Grc, BAout, ConIn, Rin, Rout, Zen
 	); 
 
 
 	wire Out_Porten, Cen, In_Porten;
+	wire R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out;
+	wire R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en, R10en, R11en, R12en, R13en, R14en, R15en;
 	
 	wire [31:0] R0BusIn, R1BusIn, R2BusIn, R3BusIn, R4BusIn, R5BusIn, R6BusIn, R7BusIn, R8BusIn, R9BusIn,
 					R10BusIn, R11BusIn, R12BusIn, R13BusIn, R14BusIn, R15BusIn, HIBusIn, LOBusIn, ZHIBusIn, ZLOBusIn,
@@ -85,10 +87,5 @@ RAM ram(Read, Write, clk, address, MDRBusIn, ramOut);
 
 ALU alu(busMuxOut, alu_input, alu_control, alu_result[63:0]);
 
-control_unit controls(
-	PCout, ZHIen, ZLOen, ZHIout, ZLOout, MDROut, Maren, MDRen, Pen, IRen, Yen, Pout, Read,
-	HIen, LOen, HIout, LOout, Cout, Write, Gra, Grb, Grc, Rin, Rout, BAout, ConIn, In_Porten, Out_Porten,
-	InPortout, Outport, Zin, Run, BusMuxInIR, clk, clr, stop
-)
 
 endmodule

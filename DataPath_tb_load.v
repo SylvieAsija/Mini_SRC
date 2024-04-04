@@ -22,12 +22,17 @@ module DataPath_tb_load;
 	parameter T7 = 4'b1110;
    reg [3:0] Present_state = Default;
 	 
-	DataPath dut(clk, clr, alu_control, Mdatain, 
-	R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out, 
-	 MDROut, HIout, LOout, ZHIout, ZLOout, Pout, Cout, Yout,
-	 IRen,MARen, MDRen, Read, Write, Yen, Pen, ZHIen, ZLOen, HIen, LOen,
-	R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en, R10en, R11en, R12en, R13en, R14en, R15en,
-	Gra, Grb, Grc, BAout, ConIn, Rin, Rout, Zen
+//	DataPath dut(clk, clr, alu_control, Mdatain, 
+//	R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out, 
+//	 MDROut, HIout, LOout, ZHIout, ZLOout, Pout, Cout, Yout,
+//	 IRen,MARen, MDRen, Read, Write, Yen, Pen, ZHIen, ZLOen, HIen, LOen,
+//	R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en, R10en, R11en, R12en, R13en, R14en, R15en,
+//	Gra, Grb, Grc, BAout, ConIn, Rin, Rout, Zen
+//	);
+	DataPath dut(.clk(clk), .clr(clr), .alu_control(alu_control), .Mdatain(Mdatain), 
+	 .MDROut(MDROut), .HIout(HIout), .LOout(LOout), .ZHIout(ZHIout), .ZLOout(ZLOout), .Pout(Pout), .Cout(Cout), .Yout(Yout),
+	 .IRen(IRen),.MARen(MARen), .MDRen(MDRen), .Read(Read), .Write(Write), .Yen(Yen), .Pen(Pen), .ZHIen(ZHIen), .ZLOen(ZLOen), .HIen(HIen), .LOen(LOen),
+	 .Gra(Gra), .Grb(Grb), .Grc(Grc), .BAout(BAout), .ConIn(ConIn), .Rin(Rin), .Rout(Rout), .Zen(Zen)
 	);
 	
 
@@ -57,11 +62,7 @@ module DataPath_tb_load;
             case (Present_state) // assert the required signals in each clock cycle
             Default: begin
 					clr<=0;
-					R0en<=0; R1en<=0; R2en<=0; R3en<=0; R4en<=0; R5en<=0; R6en<=0; R7en<=0; R8en<=0; R9en<=0;
-					R10en<=0; R11en<=0; R12en<=0; R13en<=0; R14en<=0; R15en<=0; HIen<=0; LOen<=0; ZHIen<=0; ZLOen<=0;
-					Pen<=0; MDRen<=0; In_Porten<=0; Cen<=0; IRen<=0; MARen<=0; Yen<=0;
-					R0out<=0; R1out<=0; R2out<=0; R3out<=0; R4out<=0; R5out<=0; R6out<=0; R7out<=0; R8out<=0; R9out<=0;
-					R10out<=0; R11out<=0; R12out<=0; R13out<=0; R14out<=0; R15out<=0; ZHIout<=0; ZLOout<=0; Zen<=0;
+				   ZHIout<=0; ZLOout<=0; Zen<=0;
 					Pout<=0; MDROut<=0; Cout<=0; Outport<=0; 
 					Read<=0; Write <= 0; Gra<=0; Grb<=0; Grc<=0; BAout<=0; ConIn<=0;
 					Rin<=0; Rout<=0; BAout<=0;

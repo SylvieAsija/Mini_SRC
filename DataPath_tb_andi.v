@@ -41,12 +41,12 @@ module DataPath_tb_andi;
         begin
             case (Present_state)
                 Default : Present_state = T0;
-                T0 : Present_state = T1;
-                T1 : Present_state = T2;
-                T2 : Present_state = T3;
-                T3 : Present_state = T4;
-                T4 : Present_state = T5;
-					 T5 : Present_state = T6;
+                T0 : #40 Present_state = T1;
+                T1 : #40 Present_state = T2;
+                T2 : #40 Present_state = T3;
+                T3 : #40 Present_state = T4;
+                T4 : #40 Present_state = T5;
+					 T5 : #40 Present_state = T6;
             endcase
         end
 		  
@@ -55,11 +55,7 @@ module DataPath_tb_andi;
             case (Present_state) // assert the required signals in each clock cycle
             Default: begin
 					clr<=0;
-					R0en<=0; R1en<=0; R2en<=0; R3en<=0; R4en<=0; R5en<=0; R6en<=0; R7en<=0; R8en<=0; R9en<=0;
-					R10en<=0; R11en<=0; R12en<=0; R13en<=0; R14en<=0; R15en<=0; HIen<=0; LOen<=0; ZHIen<=0; ZLOen<=0;
-					Pen<=0; MDRen<=0; In_Porten<=0; Cen<=0; IRen<=0; MARen<=0; Yen<=0;
-					R0out<=0; R1out<=0; R2out<=0; R3out<=0; R4out<=0; R5out<=0; R6out<=0; R7out<=0; R8out<=0; R9out<=0;
-					R10out<=0; R11out<=0; R12out<=0; R13out<=0; R14out<=0; R15out<=0; ZHIout<=0; ZLOout<=0; Zen<=0;
+				   ZHIout<=0; ZLOout<=0; Zen<=0;
 					Pout<=0; MDROut<=0; Cout<=0; Outport<=0; 
 					Read<=0; Write <= 0; Gra<=0; Grb<=0; Grc<=0; BAout<=0; ConIn<=0;
 					Rin<=0; Rout<=0; BAout<=0;
@@ -67,46 +63,54 @@ module DataPath_tb_andi;
             end
 
             T0: begin 
-				   #5 Pout <= 1;
-					#5 MARen <= 1;
+				    Pout <= 1;
+					 MARen <= 1;
+					 #15
+					 Pout <= 0;
+					 MARen <= 0;
             end
             T1: begin
-					#5 Pout <= 0;
-					#5 Read <= 1;
-					#5 MDRen <= 1;
+					Read <= 1;
+					 MDRen <= 1;
+					 #25
+					 Read <= 0;
+					 MDRen <= 0;
 				
             end
             T2: begin
-				    Read <= 0;
-					 MARen <= 0;
-					 MDRen <= 0;
-					 MDROut <= 1;
+				     MDROut <= 1;
 					 IRen <= 1;
+					 #25
+					 MDROut <= 0;
+					 IRen <= 0;
 					
             end
             T3: begin
-					 MDROut <= 0;
-					 IRen <= 0;
 					 Grb <= 1;
 					 Rout <= 1;
 					 Yen <= 1;
+					 #25
+					 Grb <= 0;
+					 Rout <= 0;
+					 Yen <= 0;
 				
             end
             T4: begin
-					Grb <= 0;
-					Rout <= 0;
-					Yen <= 0;
 					Cout <= 1;
 					alu_control <= 5'b00011;
 					Zen <= 1;
-					
-            end
-            T5: begin
+					#25
 					Cout <= 0;
 					Zen <= 0;
+            end
+            T5: begin
 					ZLOout <= 1;
 					Gra <= 1;
 					Rin <= 1;
+					#25
+					ZLOout <= 0;
+					Gra <= 0;
+					Rin <= 0;
             end
             endcase
         end
