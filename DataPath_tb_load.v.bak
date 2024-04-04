@@ -1,6 +1,6 @@
 `timescale 1ns/10ps
 
-module DataPath_tb_mfhi;
+module DataPath_tb_load;
 	reg clr, clk,
 	 R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en,
 	 R10en, R11en, R12en, R13en, R14en, R15en, HIen, LOen, Zen,
@@ -19,6 +19,7 @@ module DataPath_tb_mfhi;
 	parameter T4 = 4'b1011; 
 	parameter T5 = 4'b1100;
 	parameter T6 = 4'b1101;
+	parameter T7 = 4'b1110;
    reg [3:0] Present_state = Default;
 	 
 	DataPath dut(clk, clr, alu_control, Mdatain, 
@@ -26,7 +27,7 @@ module DataPath_tb_mfhi;
 	 MDROut, HIout, LOout, ZHIout, ZLOout, Pout, Cout, Yout,
 	 IRen,MARen, MDRen, Read, Write, Yen, Pen, ZHIen, ZLOen, HIen, LOen,
 	R0en, R1en, R2en, R3en, R4en, R5en, R6en, R7en, R8en, R9en, R10en, R11en, R12en, R13en, R14en, R15en,
-	Gra, Grb, Grc, BAout, ConIn, Rin, Rout
+	Gra, Grb, Grc, BAout, ConIn, Rin, Rout, Zen
 	);
 	
 
@@ -47,6 +48,7 @@ module DataPath_tb_mfhi;
                 T3 : #40 Present_state = T4;
                 T4 : #40 Present_state = T5;
 					 T5 : #40 Present_state = T6;
+					 T6 : #40 Present_state = T7;
             endcase
         end
 		  
@@ -55,7 +57,11 @@ module DataPath_tb_mfhi;
             case (Present_state) // assert the required signals in each clock cycle
             Default: begin
 					clr<=0;
-				   ZHIout<=0; ZLOout<=0; Zen<=0;
+					R0en<=0; R1en<=0; R2en<=0; R3en<=0; R4en<=0; R5en<=0; R6en<=0; R7en<=0; R8en<=0; R9en<=0;
+					R10en<=0; R11en<=0; R12en<=0; R13en<=0; R14en<=0; R15en<=0; HIen<=0; LOen<=0; ZHIen<=0; ZLOen<=0;
+					Pen<=0; MDRen<=0; In_Porten<=0; Cen<=0; IRen<=0; MARen<=0; Yen<=0;
+					R0out<=0; R1out<=0; R2out<=0; R3out<=0; R4out<=0; R5out<=0; R6out<=0; R7out<=0; R8out<=0; R9out<=0;
+					R10out<=0; R11out<=0; R12out<=0; R13out<=0; R14out<=0; R15out<=0; ZHIout<=0; ZLOout<=0; Zen<=0;
 					Pout<=0; MDROut<=0; Cout<=0; Outport<=0; 
 					Read<=0; Write <= 0; Gra<=0; Grb<=0; Grc<=0; BAout<=0; ConIn<=0;
 					Rin<=0; Rout<=0; BAout<=0;
@@ -63,7 +69,7 @@ module DataPath_tb_mfhi;
             end
 
             T0: begin 
-				     Pout <= 1;
+				    Pout <= 1;
 					 MARen <= 1;
 					 #15
 					 Pout <= 0;
@@ -78,7 +84,7 @@ module DataPath_tb_mfhi;
 				
             end
             T2: begin
-					  MDROut <= 1;
+					 MDROut <= 1;
 					 IRen <= 1;
 					 #25
 					 MDROut <= 0;
@@ -86,21 +92,48 @@ module DataPath_tb_mfhi;
 					
             end
             T3: begin
-					 Gra <= 1;
-					 Rin <= 1;
-					 HIout <= 1;
+					 Grb <= 1;
+					 BAout <= 1;
+					 Yen <= 1;
 					 #25
-					 Gra <= 0;
-					 Rin <= 0;
-					 HIout <= 0;
-			   end
-//            T4: begin
-//				
-//					
-//            end
-//            T5: begin
-//					
-//            end
+					 Grb <= 0;
+					 BAout <= 0;
+					 Yen <= 0;
+            end
+            T4: begin
+					 Cout <= 1;
+					 alu_control <= 5'b00011;
+					 Zen <= 1;
+					 #25
+					Cout <= 0;
+					Zen <= 0;
+					
+            end
+            T5: begin
+					ZLOout <= 1;
+					MARen <= 1;
+					#25
+					ZLOout <= 0;
+					MARen <= 0;
+					
+            end
+				T6: begin
+					Read <= 1;
+					MDRen <= 1;
+					#25
+					Read <= 0;
+					MDRen <= 0;
+				
+            end
+				T7: begin
+					MDROut <= 1;
+					Gra <= 1;
+					Rin <= 1;
+					#25
+					Gra <= 0;
+					Rin <= 0;
+					MDROut <= 0;
+					end
             endcase
         end
 endmodule
