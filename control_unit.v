@@ -192,7 +192,7 @@ always @ (present_state)
 begin
     case(present_state)
         reset_state: begin
-            Gra<=0;Grb<=0;Grc<=0;Yen<=0;Pout<=0;ZHIout<=0;ZLOout<=0;MDROut<=0;MARen<=0;
+            Run<=1;Gra<=0;Grb<=0;Grc<=0;Yen<=0;Pout<=0;ZHIout<=0;ZLOout<=0;MDROut<=0;MARen<=0;
             Pen<=0;MDRen<=0;IRen<=0;Yen<=0;PCout<=0;Read<=0;HIen<=0;LOen<=0;HIout<=0;LOout<=0;
             ZHIen<=0;ZLOen<=0;Cout<=0;Write<=0;Rin<=0;Rout<=0;BAout<=0;ConIn<=0;In_Porten<=0;
             Out_Porten<=0;InPortout<=0;Outport<=0;
