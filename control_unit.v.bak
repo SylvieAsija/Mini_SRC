@@ -3,7 +3,7 @@
 module control_unit (
     output reg PCout, ZHIen, ZLOen, ZHIout, ZLOout, MDROut, MARen, MDRen, Pen, IRen, Yen, Pout, Read,
                HIen, LOen, HIout, LOout, Cout, Write, Gra, Grb, Grc, Rin, Rout, BAout, 
-               ConIn, In_Porten, Out_Porten, InPortout, Outport, Zin, Run, incPC,
+               ConIn, In_Porten, Out_Porten, InPortout, Outport, Zin, Run
     input [31:0] BusMuxInIR,
     input clock, reset, stop);
 
@@ -37,7 +37,7 @@ parameter reset_state = 8'h00, fetch0 = 8'h01, fetch1 = 8'h02, fetch2 = 8'h03,
           nop3 = 8'h4D,
           halt3 = 8'h4E;
 
-reg [7:0] present_state = reset_state;
+reg [7:0] present_state = Reset_param;
 
 always @ (posedge clock, posedge reset) begin
     if (reset) present_state = reset_state;
@@ -48,7 +48,7 @@ always @ (posedge clock, posedge reset) begin
         fetch1      : present_state = fetch2;
         fetch2      : begin
                         @ (posedge clock);
-                        case (BusMuxInIR[31:27])
+                        case (IR[31:27])
                             5'b00011 : present_state = add3;
                             5'b00100 : present_state = sub3;
                             5'b01111 : present_state = mul3;
@@ -90,12 +90,14 @@ always @ (posedge clock, posedge reset) begin
     mul3 : present_state = mul4;
     mul4 : present_state = mul5;
     mul5 : present_state = mul6;
-    mul6 : present_state = fetch0;
+    mul6 : present_state = mul7;
+    mul7 : present_state = fetch0;
 
     div3 : present_state = div4;
     div4 : present_state = div5;
     div5 : present_state = div6;
-    div6 : present_state = fetch0;
+    div6 : present_state = div7;
+    div7 : present_state = fetch0;
 
     shr3 : present_state = shr4;
     shr4 : present_state = shr5;
@@ -118,10 +120,12 @@ always @ (posedge clock, posedge reset) begin
     rol5 : present_state = fetch0;
 
     neg3 : present_state = neg4;
-    neg4 : present_state = fetch0;
+    neg4 : present_state = neg5;
+    neg5 : present_state = fetch0;
 
     not3 : present_state = not4;
-    not4 : present_state = fetch0;
+    not4 : present_state = not5;
+    not5 : present_state = fetch0;
 
     or3 : present_state = or4;
     or4 : present_state = or5;
@@ -350,7 +354,7 @@ begin
         end
 
         st6 : begin
-            ZLOout<=0;MARen<=0;
+            ZLOout<=0;Maren<=0;
             Read<=0;Gra<=0;Rout<=0;MDRen<=0;
         end
 

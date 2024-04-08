@@ -96,7 +96,7 @@ module DataPath_tb_addi;
             end
             T4: begin
 					Cout <= 1;
-					alu_control <= 5b'00011;
+					alu_control <= 5'b00011;
 					Zen <= 1;
 					#25
 					Cout<=0;
