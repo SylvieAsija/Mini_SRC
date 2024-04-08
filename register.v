@@ -8,7 +8,7 @@ module register #(parameter qInit = 0)(input clr, clk, enable, input[31:0]d, out
 	
 		if(clr)
 			q <= 32'h00000000;
-		else if(enable)
+		if(enable)
 			q <= d;
 			
 	end

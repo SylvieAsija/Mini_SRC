@@ -2,10 +2,7 @@ module memoryDataRegister (input clk, clr, MDRen, read, input [31:0] Mdatain,inp
 	output wire [31:0] q
 );
 
-reg [31:0] d;
+wire [31:0] d;
+assign d = read ? Mdatain : busMuxout;
 register r(clr, clk, MDRen, d, q);
-always @ (*) begin
-	if (read) d = Mdatain;
-	else	d = busMuxout;
-end
 endmodule
